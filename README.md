@@ -5,9 +5,10 @@
 - `gcloud auth login`
 - `gcloud config set project waymorevidya`
 
-## build docker 
+## build docker
 
 - `docker build -t gcr.io/waymorevidya/api:latest -f ./api.Dockerfile .`
+- `docker push gcr.io/waymorevidya/api:latest`
 
 ## deploy to cloud run
 
