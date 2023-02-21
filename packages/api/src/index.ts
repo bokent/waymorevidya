@@ -11,7 +11,7 @@ import { ERROR, ProjectError } from './errors'
 const app = express()
 const PORT = process.env.PORT || 8080
 
-app.post('/instructions/mint', (_req: Request, res: Response) => {
+app.post('/ixs/mint', (_req: Request, res: Response) => {
   res.status(501).json({ msg: 'mot yet implemented' })
 })
 
