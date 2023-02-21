@@ -13,6 +13,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/debug": "^4.1.7",
+    "@types/node-fetch": "^2.6.2",
     "@typescript-eslint/eslint-plugin": "^5.3.0",
     "@typescript-eslint/parser": "^5.3.0",
     "concurrently": "^6.3.0",
