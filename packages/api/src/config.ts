@@ -1,3 +1,5 @@
+import { clusterApiUrl, Cluster } from '@solana/web3.js'
+
 export function getEnvVariable(name: string): string {
   const value = process.env[name]
   if (typeof value === 'undefined') {
@@ -6,13 +8,13 @@ export function getEnvVariable(name: string): string {
   return value
 }
 
-const SUPPORTED_NETWORKS = Object.freeze(['mainnet-beta', 'devent'])
-type Network = typeof SUPPORTED_NETWORKS[number]
+const SUPPORTED_NETWORKS: Readonly<Cluster[]> = Object.freeze(['mainnet-beta', 'devnet'])
+type SupportedNetwork = typeof SUPPORTED_NETWORKS[number]
 
-export function getNetwork(): Network {
+export function getNetwork(): SupportedNetwork {
   const network = getEnvVariable('NETWORK')
-  if (SUPPORTED_NETWORKS.includes(network)) {
-    return network
+  if (SUPPORTED_NETWORKS.includes(network as SupportedNetwork)) {
+    return network as SupportedNetwork
   }
   throw new Error(`NETOWRK environment variable has unsupported value ${network}`)
 }
@@ -23,6 +25,14 @@ export function isMainnet(): boolean {
 
 export function isDevnet(): boolean {
   return getNetwork() === 'devnet'
+}
+
+export function getRpcUrl(): string {
+  try {
+    return getEnvVariable('RPC_URL')
+  } catch (_err) {
+    return clusterApiUrl(getNetwork())
+  }
 }
 
 export function getStorageConfig() {
