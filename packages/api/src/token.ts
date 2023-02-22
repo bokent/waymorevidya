@@ -15,6 +15,12 @@ import { getEnvVariable, getStorageConfig } from './config'
 import { ERROR } from './codes'
 import logger from './logger'
 
+// const UNLIMINTED_SUPPLY = null;
+
+export async function mintMcc(connection: Connection, mccConfig: any) {
+  throw new Error('not yet implemented')
+}
+
 interface SftConfig {
   mccAddress: PublicKey
   collection: {
@@ -111,6 +117,7 @@ export async function createSft(
     // tokenOwner: metaplex.identity().publicKey,
     sellerFeeBasisPoints: sftConfig.sellerFeeBasisPoints,
     creators,
+    // maxSupply: UNLIMINTED_SUPPLY,
     // MCC props
     isCollection: true,
     collection: sftConfig.mccAddress,
