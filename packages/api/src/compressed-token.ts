@@ -15,7 +15,6 @@ import {
 import { ASSOCIATED_TOKEN_PROGRAM_ID, Token, TOKEN_PROGRAM_ID } from '@solana/spl-token'
 import {
   Keypair,
-  // LAMPORTS_PER_SOL,
   PublicKey,
   sendAndConfirmTransaction,
   Signer,
@@ -48,6 +47,14 @@ import {
 } from '@solana/spl-account-compression'
 import NodeWallet from '@project-serum/anchor/dist/cjs/nodewallet'
 import axios from 'axios'
+import { getEnvVariable } from './config'
+
+/**
+ * you can run this mint process with this command
+ * $ pnpm ts-node -r dotenv/config src/compressed-token.ts
+ *
+ * see wholeFlow function to see what is going on when you execute the script
+ */
 
 export class WrappedConnection extends Connection {
   axiosInstance: any
@@ -66,35 +73,29 @@ export class WrappedConnection extends Connection {
   }
 
   async getAsset(assetId: any): Promise<any> {
-    try {
-      const response = await this.axiosInstance.post('get_asset', {
-        jsonrpc: '2.0',
-        method: 'getAsset',
-        id: 'rpd-op-123',
-        params: {
-          id: assetId
-        }
-      })
-      return response.data.result
-    } catch (error) {
-      console.error(error)
-    }
+    const response = await this.axiosInstance.post('get_asset', {
+      jsonrpc: '2.0',
+      method: 'getAsset',
+      id: 'rpd-op-123',
+      params: {
+        id: assetId
+      }
+    })
+    console.debug('getAsset response:', response.data.result)
+    return response.data.result
   }
 
   async getAssetProof(assetId: any): Promise<any> {
-    try {
-      const response = await this.axiosInstance.post('get_asset_proof', {
-        jsonrpc: '2.0',
-        method: 'getAssetProof',
-        id: 'rpd-op-123',
-        params: {
-          id: assetId
-        }
-      })
-      return response.data.result
-    } catch (error) {
-      console.error(error)
-    }
+    const response = await this.axiosInstance.post('get_asset_proof', {
+      jsonrpc: '2.0',
+      method: 'getAssetProof',
+      id: 'rpd-op-123',
+      params: {
+        id: assetId
+      }
+    })
+    console.debug('getAssetProof response:', response.data.result)
+    return response.data.result
   }
 
   async getAssetsByOwner(
@@ -105,27 +106,24 @@ export class WrappedConnection extends Connection {
     before: string,
     after: string
   ): Promise<any> {
-    try {
-      const response = await this.axiosInstance.post('get_assets_by_owner', {
-        jsonrpc: '2.0',
-        method: 'get_assets_by_owner',
-        id: 'rpd-op-123',
-        params: [assetId, sortBy, limit, page, before, after]
-      })
-      return response.data.result
-    } catch (error) {
-      console.error(error)
-    }
+    const response = await this.axiosInstance.post('get_assets_by_owner', {
+      jsonrpc: '2.0',
+      method: 'get_assets_by_owner',
+      id: 'rpd-op-123',
+      params: [assetId, sortBy, limit, page, before, after]
+    })
+    console.debug('getAssetByOwner response:', response.data.result)
+    return response.data.result
   }
 }
 
 Error.stackTraceLimit = Infinity
 const makeCompressedNFT = (name: string, symbol: string, creators: Creator[] = []) => {
   return {
-    name: 'Degen Ape #1338',
-    symbol: 'DAPE',
+    name,
+    symbol,
     uri: 'https://arweave.net/gfO_TkYttQls70pTmhrdMDz9pfMUXX8hZkaoIivQjGs',
-    creators: [],
+    creators,
     editionNonce: 253,
     tokenProgramVersion: TokenProgramVersion.Original,
     tokenStandard: TokenStandard.NonFungible, // FIXME change to FungibleAsset
@@ -331,8 +329,6 @@ const setupTreeWithCompressedNFT = async (
   }
 }
 
-// eslint-disable-next-line
-// @ts-ignore
 const transferAsset = async (
   connectionWrapper: WrappedConnection,
   newOwner: Keypair,
@@ -484,16 +480,21 @@ async function decompressAsset(
   await execute(connectionWrapper.provider, [decompressIx], [_payer as Signer], true)
 }
 
-const wholeFlow = async () => {
+const wholeFlow = async (opts: { decopres?: boolean } = {}) => {
   const rpcUrl = 'https://rpc-devnet.aws.metaplex.com/'
   const connectionString = 'https://liquid.devnet.rpcpool.com/5ebea512d12be102f53d319dafc8'
+
+  // Generic secret key is used as a simple solution
+  // we should use creators sign to proceed with creation of token accounts
+  const demoSecretKey = getEnvVariable('DEMO_SECRET_KEY')
+  const creatorKeypair = Keypair.fromSecretKey(Buffer.from(JSON.parse(demoSecretKey)))
+
+  // const royaltySecretKey = getEnvVariable('PROJECT_ROYALTY_SECRET_KEY')
+  // const projectRoyaltyKeypair = Keypair.fromSecretKey(Buffer.from(JSON.parse(royaltySecretKey)))
+
   // set up connection object
   // provides all connection functions and rpc functions
-  const connectionWrapper = new WrappedConnection(
-    Keypair.fromSeed(new TextEncoder().encode('hello world'.padEnd(32, '\0'))),
-    connectionString,
-    rpcUrl
-  )
+  const connectionWrapper = new WrappedConnection(creatorKeypair, connectionString, rpcUrl)
 
   // await connectionWrapper.requestAirdrop(
   //   connectionWrapper.payer.publicKey,
@@ -501,7 +502,13 @@ const wholeFlow = async () => {
   // );
   console.log('payer', connectionWrapper.provider.wallet.publicKey.toBase58())
   // returns filled out metadata args struct, doesn't actually do anything mint wise
-  const originalCompressedNFT = makeCompressedNFT('test', 'TST', [])
+  const originalCompressedNFT = makeCompressedNFT('degen test', 'TST DAPE', [
+    {
+      address: creatorKeypair.publicKey,
+      share: 100,
+      verified: true
+    }
+  ])
   // creates  and executes the merkle tree ix
   // and the mint ix is executed here as well
   const result = await setupTreeWithCompressedNFT(
@@ -528,12 +535,17 @@ const wholeFlow = async () => {
     BUBBLEGUM_PROGRAM_ID
   )
 
+  console.log('wait 15 sec')
   await sleep(15000)
+
   const assetString = assetId.toBase58()
   const newOwner = Keypair.generate()
   console.log('new owner', newOwner.publicKey.toBase58())
+
+  console.log('wait 2 min')
   sleep(120000)
-  console.log(assetString)
+
+  console.log('asset PDA:', assetString)
   await execute(
     connectionWrapper.provider,
     [
@@ -549,13 +561,16 @@ const wholeFlow = async () => {
 
   // transferring the compressed asset to a new owner
   await transferAsset(connectionWrapper, newOwner, canopyHeight, assetString)
-  // asset has to be redeemed before it can be decompressed
-  // redeem is included above as a separate function because it can be called
-  // without decompressing nftbut it is also called
-  // inside of decompress so we don't need to call that separately here
-  sleep(15000)
 
-  await decompressAsset(connectionWrapper, canopyHeight, newOwner, assetString)
+  if (opts.decopres) {
+    console.log('wait 15 sec')
+    sleep(15_000)
+    // asset has to be redeemed before it can be decompressed
+    // redeem is included above as a separate function because it can be called
+    // without decompressing nftbut it is also called
+    // inside of decompress so we don't need to call that separately here
+    await decompressAsset(connectionWrapper, canopyHeight, newOwner, assetString)
+  }
 }
 
 wholeFlow()

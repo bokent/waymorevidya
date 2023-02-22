@@ -31,10 +31,10 @@ export async function execute(
   skipPreflight = false,
   verbose = false
 ): Promise<string> {
-  let tx = new Transaction()
-  instructions.map((ix) => {
-    tx = tx.add(ix)
-  })
+  const tx = new Transaction()
+  for (const ix of instructions) {
+    tx.add(ix)
+  }
 
   let txid: string | null = null
   try {
