@@ -1,23 +1,35 @@
 import { ReactNode } from 'react'
-import { AppShell, Navbar, Header } from '@mantine/core'
+import { AppShell, Container, Navbar, Header, Box, Flex } from '@mantine/core'
+import { SearchBar } from './SearchBar'
+import { Logo } from './Logo'
 
-// <Navbar width={{ base: 300 }} height={500} p="xs">{/* Navbar content */}</Navbar>
 function LayoutNavigation() {
   return (
-    <Navbar width={{ base: 240 }}>
-      <Navbar.Section>Header with log</Navbar.Section>
-      <Navbar.Section grow mt="md">
-        Links sections
+    <Navbar width={{ base: 240 }} withBorder={false}>
+      <Navbar.Section mt="xl">
+        <Box sx={{ margin: '0 auto', width: '200px' }}>Links section 1</Box>
       </Navbar.Section>
-      <Navbar.Section>Footer</Navbar.Section>
+      <Navbar.Section grow mt="xl">
+        <Box sx={{ margin: '0 auto', width: '200px' }}>Links section 2</Box>
+      </Navbar.Section>
+      <Navbar.Section mb="xl">
+        <Box sx={{ margin: '0 auto', width: '200px' }}>Footer</Box>
+      </Navbar.Section>
     </Navbar>
   )
 }
 
 function LayoutHeader() {
   return (
-    <Header height={60} p="xs">
-      Bokor Games
+    <Header height={55 + 28 + 28} pt="40px" pb="40px" pl="xl" pr="xl" withBorder={false}>
+      <Flex gap="lg">
+        <div>
+          <Logo />
+        </div>
+        <Container size={468} pt="12px" pb="12px" mx="24px">
+          <SearchBar />
+        </Container>
+      </Flex>
     </Header>
   )
 }
@@ -28,17 +40,7 @@ type LayoutProps = {
 
 export function Layout(props: LayoutProps) {
   return (
-    <AppShell
-      padding="md"
-      navbar={<LayoutNavigation />}
-      header={<LayoutHeader />}
-      styles={(theme) => ({
-        main: {
-          backgroundColor:
-            theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0]
-        }
-      })}
-    >
+    <AppShell padding="md" navbar={<LayoutNavigation />} header={<LayoutHeader />}>
       {props.children}
     </AppShell>
   )
