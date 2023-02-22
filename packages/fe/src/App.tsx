@@ -1,12 +1,18 @@
 import { MantineProvider } from '@mantine/core'
-import { Layout } from './components/Layout'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { HomePage } from './pages/HomePage'
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <HomePage />
+  }
+])
 
 export default function App() {
   return (
     <MantineProvider withGlobalStyles withNormalizeCSS>
-      <Layout>
-        <h1>Bokor Games</h1>
-      </Layout>
+      <RouterProvider router={router} />
     </MantineProvider>
   )
 }
