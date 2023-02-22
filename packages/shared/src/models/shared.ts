@@ -43,13 +43,6 @@ export class MongoSchema<DocType = any> extends Schema {
     }
   }
 
-export class MongoModel extends mongoose.Model {
-    private mongoose_connection: mongoose.Connection;
-    public model;
-    constructor(mongo_collection_name: string, mongoSchema: MongoSchema) {
-        this.mongoose_connection = mongoose.createConnection(MONGO_URL)
-        this = this.mongoose_connection.model(mongo_collection_name, mongoSchema);
-        super()
-
-    }
+export function createMoogoseModel<T>(mongo_collection_name: string, mongoSchema: Schema) {
+  return mongoose.createConnection(MONGO_URL).model<Schema<T>>(mongo_collection_name, mongoSchema);
 }

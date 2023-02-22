@@ -28,6 +28,7 @@ import mongoose, {
   UpdateWriteOpResult,
   startSession,
 } from "mongoose";
+import { createMoogoseModel, MongoSchema } from "./shared";
 
 
 
@@ -56,7 +57,7 @@ interface SftConfig {
   }>;
 }
 
-const dbcWalletPortfolioSchema = new MongoSchema<SftConfig>(
+const sftConfigSchema = new MongoSchema<SftConfig>(
   {
     mccAddress: { index: true},
   },
@@ -65,16 +66,16 @@ const dbcWalletPortfolioSchema = new MongoSchema<SftConfig>(
   }
 );
 
-export const DbcWalletPortfolioModel = new MongoModel<IDbcWalletPortfolio>(
+export const DbcWalletPortfolioModel = createMoogoseModel<SftConfig>(
   "DbcWalletPortfolioSchema",
-  dbcWalletPortfolioSchema
+  sftConfigSchema
 );
 
-export async function fetchDbcWalletPortfolio(
+export async function fetchSftConfig(
   walletAddress: string
-): Promise<IDbcWalletPortfolio | null> {
-  const portfolio: IDbcWalletPortfolio | null =
-    await DbcWalletPortfolioModel.findOne<IDbcWalletPortfolio>({
+): Promise<SftConfig | null> {
+  const portfolio: SftConfig | null =
+    await DbcWalletPortfolioModel.findOne<SftConfig>({
       walletAddress,
     }).lean();
   return portfolio;
