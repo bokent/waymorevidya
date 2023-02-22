@@ -66,17 +66,17 @@ const sftConfigSchema = new MongoSchema<SftConfig>(
   }
 );
 
-export const DbcWalletPortfolioModel = createMoogoseModel<SftConfig>(
-  "DbcWalletPortfolioSchema",
+export const sftConfigModel = createMoogoseModel<SftConfig>(
+  "sft_config",
   sftConfigSchema
 );
 
 export async function fetchSftConfig(
-  walletAddress: string
+  mccAddress: string
 ): Promise<SftConfig | null> {
   const portfolio: SftConfig | null =
-    await DbcWalletPortfolioModel.findOne<SftConfig>({
-      walletAddress,
+    await sftConfigModel.findOne<SftConfig>({
+      mccAddress,
     }).lean();
   return portfolio;
 }
