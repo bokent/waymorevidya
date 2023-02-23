@@ -2,6 +2,7 @@ import { PROGRAM_ID, TreeConfig } from '@metaplex-foundation/mpl-bubblegum'
 import { Connection, PublicKey, Signer, Transaction, TransactionInstruction } from '@solana/web3.js'
 import { AnchorProvider, BN } from '@project-serum/anchor'
 import { PROGRAM_ID as TOKEN_METADATA_PROGRAM_ID } from '@metaplex-foundation/mpl-token-metadata'
+import { AxiosError } from 'axios'
 
 export async function getBubblegumAuthorityPDA(merkleRollPubKey: PublicKey) {
   const [bubblegumAuthorityPDAKey] = await PublicKey.findProgramAddress(
@@ -43,8 +44,10 @@ export async function execute(
     })
   } catch (e: any) {
     console.log('tx execution error', e)
-    if (e.response.data) {
-      console.log('tx execution response', e.response.data)
+    if (e instanceof AxiosError) {
+      if (e.response) {
+        console.log('tx execution response', e.response.data)
+      }
     }
     if (e.logs) {
       console.log('tx logs', e.logs)

@@ -482,7 +482,9 @@ async function decompressAsset(
 
 const wholeFlow = async (opts: { decopres?: boolean } = {}) => {
   const rpcUrl = getRpcUrl()
-  const connectionString = 'https://liquid.devnet.rpcpool.com/5ebea512d12be102f53d319dafc8'
+  const connectionString = getRpcUrl()
+  console.log('rpcUrl:', rpcUrl, 'connectionString:', connectionString)
+  // const connectionString = 'https://liquid.devnet.rpcpool.com/5ebea512d12be102f53d319dafc8'
 
   // Generic secret key is used as a simple solution
   // we should use creators sign to proceed with creation of token accounts
