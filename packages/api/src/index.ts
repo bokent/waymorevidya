@@ -3,19 +3,22 @@ dotenv.config()
 
 // eslint-disable-next-line
 import * as express from 'express'
-// eslint-disable-next-line
+/* eslint-disable */
 import { Request, Response, NextFunction } from 'express'
 import { getLootboxsByAppId } from 'shared/src/models'
-// eslint-disable-next-line
 import { ERROR, ErrorCode } from './codes'
 import { getGames, getItemsByAppId } from './game'
 import { getSteamApp } from './steam'
 import * as cors from 'cors'
+import { DEFAULT_APP_PORT, getCorsConfig } from './config'
+/* eslint-enable */
 
 const app = express()
-const PORT = process.env.PORT || 8080
+const PORT = process.env.PORT || DEFAULT_APP_PORT
 
-app.use(cors())
+app.use(
+  cors(getCorsConfig())
+)
 
 app.post('/ixs/mint', (_req: Request, res: Response) => {
   res.status(501).json({ msg: 'mot yet implemented' })

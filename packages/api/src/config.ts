@@ -1,5 +1,7 @@
 import { clusterApiUrl, Cluster } from '@solana/web3.js'
 
+export const DEFAULT_APP_PORT = 8080
+
 export function getEnvVariable(name: string): string {
   const value = process.env[name]
   if (typeof value === 'undefined') {
@@ -45,4 +47,17 @@ export function getStorageConfig() {
     providerUrl: 'https://api.devnet.solana.com',
     timeout: 30000
   }
+}
+
+export function getCorsConfig() {
+  const origin = [
+    'https://waymorevidya.pages.dev',
+    'https://waymorevidya.io',
+    'https://waymorejpegs.xyz'
+  ]
+  if (isDevnet()) {
+    const port = process.env.PORT || DEFAULT_APP_PORT
+    origin.push(`http://localhost:${port}`)
+  }
+  return { origin }
 }
