@@ -1,4 +1,4 @@
-import { Title } from '@mantine/core'
+import { Box, Title } from '@mantine/core'
 import { GenericList } from '../components/GenericList'
 import { Layout } from '../components/Layout'
 import { ProductForm } from '../components/ProductForm'
@@ -7,16 +7,18 @@ export function CreateProductPage() {
   return (
     <Layout>
       <Title mb="xl">Product Creator</Title>
-      <ProductForm
-        initialValues={{
-          name: '',
-          image: '',
-          productType: '',
-          paymentType: '',
-          mintKey: '',
-          rarityConfig: [0, 0, 0, 0, 0]
-        }}
-      />
+      <Box mb="xl">
+        <ProductForm
+          initialValues={{
+            name: '',
+            image: '',
+            productType: '',
+            paymentType: '',
+            mintKey: '',
+            rarityConfig: [0, 0, 0, 0, 0]
+          }}
+        />
+      </Box>
       <GenericList
         data={[
           {

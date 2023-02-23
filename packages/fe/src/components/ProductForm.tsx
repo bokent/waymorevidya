@@ -1,6 +1,7 @@
-import { Image, TextInput, Box, NumberInput, Select, SimpleGrid } from '@mantine/core'
+import { Image, TextInput, Box, NumberInput, Select, SimpleGrid, Button } from '@mantine/core'
 import { Formik } from 'formik'
 import { IconPercentage } from '@tabler/icons-react'
+import { Link } from 'react-router-dom'
 
 interface ProductFormValues {
   image: string
@@ -165,6 +166,13 @@ export function ProductForm(props: ProductFormProps) {
               />
             </Box>
           </SimpleGrid>
+          <Button
+            variant="outline"
+            component={Link}
+            to="/products/63f6f59efc64c730ae39b37b/preview"
+          >
+            Preview
+          </Button>
         </form>
       )}
     </Formik>

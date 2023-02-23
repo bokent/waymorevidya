@@ -6,6 +6,7 @@ import { CreateProductPage } from './pages/CreateProductPage'
 import { EditGamePage } from './pages/EditGamePage'
 import { HomePage } from './pages/HomePage'
 import { PublisherPage } from './pages/PublisherPage'
+import { ProductPage } from './pages/ProductPage'
 
 // see https://reactrouter.com/en/main/start/tutorial
 const router = createBrowserRouter([
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
   {
     path: '/products/new',
     element: <CreateProductPage />
+  },
+  {
+    path: '/products/:productId/preview',
+    element: <ProductPage isPreview />
   },
   {
     path: '/publisher',
