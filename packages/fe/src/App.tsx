@@ -2,6 +2,7 @@ import { MantineProvider, MantineTheme } from '@mantine/core'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { GamesPage } from './pages/GamesPage'
 import { CreateGamePage } from './pages/CreateGamePage'
+import { EditGamePage } from './pages/EditGamePage'
 import { HomePage } from './pages/HomePage'
 import { PublisherPage } from './pages/PublisherPage'
 
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
   {
     path: '/games/new',
     element: <CreateGamePage />
+  },
+  {
+    path: '/games/:gameId/edit',
+    element: <EditGamePage />
   },
   {
     path: '/publisher',

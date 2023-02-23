@@ -50,7 +50,7 @@ interface Game {
 }
 
 type GameListProps = {
-  header: ReactNode
+  header?: ReactNode
   data: Game[]
 }
 
