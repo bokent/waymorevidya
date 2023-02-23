@@ -3,6 +3,7 @@
   "name": "fe",
   "version": "1.0.0",
   "dependencies": {
+    "@babel/core": "7.0.0",
     "@babel/plugin-syntax-flow": "^7.18.6",
     "@babel/plugin-transform-react-jsx": "^7.21.0",
     "@emotion/react": "^11.10.6",
