@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import { Card, Container, Flex, Image, Text, Badge, Button, Group, Grid } from '@mantine/core'
+import { Card, Flex, Image, Text, Badge, Button, Group, Grid } from '@mantine/core'
 import { IconEdit } from '@tabler/icons-react'
 import formatDistance from 'date-fns/formatDistance'
 
@@ -59,7 +59,7 @@ export function GameList(props: GameListProps) {
     <>
       {props.header && <div>{props.header}</div>}
       <Grid mb="xl">
-        {props.data.map((item: any) => (
+        {props.data.map((item: Game) => (
           <Grid.Col span="content">
             <GameCard
               name={item.name}

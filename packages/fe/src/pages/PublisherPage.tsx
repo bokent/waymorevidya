@@ -2,6 +2,7 @@ import { Button, Flex, Title } from '@mantine/core'
 import { Layout } from '../components/Layout'
 import { GameList } from '../components/GameList'
 import { IconPlus } from '@tabler/icons-react'
+import { Link } from 'react-router-dom'
 
 export function PublisherPage() {
   return (
@@ -12,7 +13,7 @@ export function PublisherPage() {
             <Title order={2} mb="md">
               Published Games
             </Title>
-            <Button>
+            <Button component={Link} to="/games/new">
               <IconPlus /> Add New Game
             </Button>
           </Flex>
