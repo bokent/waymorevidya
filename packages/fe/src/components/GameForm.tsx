@@ -43,7 +43,13 @@ export function GameForm(props: GameFormProps) {
             onBlur={form.handleBlur}
             value={form.values.mainImage}
           />
-          <Image src={form.values.mainImage || null} withPlaceholder width={250} height={100} />
+          <Image
+            src={form.values.mainImage || null}
+            withPlaceholder
+            width={250}
+            height={100}
+            mb="3rem"
+          />
         </form>
       )}
     </Formik>

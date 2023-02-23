@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import { Card, Flex, Image, Text, Badge, Button, Group, Grid } from '@mantine/core'
+import { Card, Flex, Image, Text, Button, Group, Grid } from '@mantine/core'
 import { IconEdit } from '@tabler/icons-react'
 import formatDistance from 'date-fns/formatDistance'
 

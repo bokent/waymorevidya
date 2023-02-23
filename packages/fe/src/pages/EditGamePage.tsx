@@ -9,7 +9,7 @@ export function EditGamePage() {
   return (
     <Layout>
       <Title>Game Manger</Title>
-      <Container px="0" mb="xl">
+      <Container px="0" mx="0" mb="xl">
         <GameForm initialValues={{ mccAddress: '', name: '', mainImage: '', isPublished: false }} />
       </Container>
       <GenericList
