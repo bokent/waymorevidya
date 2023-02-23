@@ -1,10 +1,12 @@
-import { Flex } from '@mantine/core'
+import { Button, Flex } from '@mantine/core'
 import { IconWallet } from '@tabler/icons-react'
 
 export function Wallet() {
   return (
-    <Flex gap="md">
-      <IconWallet /> bokor.sol
-    </Flex>
+    <Button variant="outline">
+      <Flex gap="xs" align="center">
+        <IconWallet /> bokor.sol
+      </Flex>
+    </Button>
   )
 }
