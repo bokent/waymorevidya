@@ -1,6 +1,5 @@
 import { Image, TextInput } from '@mantine/core'
 import { Formik } from 'formik'
-import { useCallback, useEffect, useState } from 'react'
 
 interface GameFormValues {
   mccAddress: string

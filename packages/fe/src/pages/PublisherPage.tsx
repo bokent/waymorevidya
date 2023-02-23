@@ -1,6 +1,6 @@
 import { Button, Flex, Title } from '@mantine/core'
 import { Layout } from '../components/Layout'
-import { GameList, GameListProps } from '../components/GameList'
+import { GameList } from '../components/GameList'
 import { IconPlus } from '@tabler/icons-react'
 import { useEffect, useState } from 'react'
 import { Game } from 'shared/src/models'

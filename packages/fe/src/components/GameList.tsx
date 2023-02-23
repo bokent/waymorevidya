@@ -2,7 +2,6 @@ import { ReactNode } from 'react'
 import { Card, Flex, Image, Text, Badge, Button, Group, Grid } from '@mantine/core'
 import { IconEdit } from '@tabler/icons-react'
 import formatDistance from 'date-fns/formatDistance'
-import { Game } from 'shared/src/models'
 
 type GameCardProps = {
   appId: number

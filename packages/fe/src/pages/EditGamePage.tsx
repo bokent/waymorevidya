@@ -51,7 +51,7 @@ export function EditGamePage() {
       )
     }
     getGame()
-  }, [])
+  }, [gameId])
   // useEffect(() => {
   //   console.log(gameDetails)
   // }, [gameDetails])
@@ -72,7 +72,7 @@ export function EditGamePage() {
       setItems(res)
     }
     getItems()
-  }, [])
+  }, [gameId])
   useEffect(() => {
     if (!gameId) {
       return
@@ -88,7 +88,7 @@ export function EditGamePage() {
       setProducts(res)
     }
     getProducts()
-  }, [])
+  }, [gameId])
   if (gameDetails.appId == 0) {
     return <LoadingOverlay visible={true} />
   }
