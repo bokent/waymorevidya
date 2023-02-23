@@ -1,6 +1,6 @@
 import { PROGRAM_ID, TreeConfig } from '@metaplex-foundation/mpl-bubblegum'
 import { Connection, PublicKey, Signer, Transaction, TransactionInstruction } from '@solana/web3.js'
-import { BN, Provider } from '@project-serum/anchor'
+import { AnchorProvider, BN } from '@project-serum/anchor'
 import { PROGRAM_ID as TOKEN_METADATA_PROGRAM_ID } from '@metaplex-foundation/mpl-token-metadata'
 
 export async function getBubblegumAuthorityPDA(merkleRollPubKey: PublicKey) {
@@ -25,7 +25,7 @@ export function bufferToArray(buffer: Buffer): number[] {
 }
 
 export async function execute(
-  provider: Provider,
+  provider: AnchorProvider,
   instructions: TransactionInstruction[],
   signers: Signer[],
   skipPreflight = false,
@@ -38,11 +38,17 @@ export async function execute(
 
   let txid: string | null = null
   try {
-    txid = await provider.sendAndConfirm!(tx, signers, {
+    txid = await provider.sendAndConfirm(tx, signers, {
       skipPreflight
     })
   } catch (e: any) {
-    console.log('Tx error!', e.logs)
+    console.log('tx execution error', e)
+    if (e.response.data) {
+      console.log('tx execution response', e.response.data)
+    }
+    if (e.logs) {
+      console.log('tx logs', e.logs)
+    }
     throw e
   }
 

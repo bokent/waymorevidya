@@ -21,7 +21,6 @@ import {
   SystemProgram,
   SYSVAR_RENT_PUBKEY,
   Transaction,
-  LAMPORTS_PER_SOL,
   AccountMeta,
   Connection
 } from '@solana/web3.js'
@@ -46,8 +45,8 @@ import {
   ConcurrentMerkleTreeAccount
 } from '@solana/spl-account-compression'
 import NodeWallet from '@project-serum/anchor/dist/cjs/nodewallet'
-import axios from 'axios'
-import { getEnvVariable } from './config'
+import axios, { Axios } from 'axios'
+import { getEnvVariable, getRpcUrl } from './config'
 
 /**
  * you can run this mint process with this command
@@ -57,9 +56,10 @@ import { getEnvVariable } from './config'
  */
 
 export class WrappedConnection extends Connection {
-  axiosInstance: any
+  axiosInstance: Axios
   provider: AnchorProvider
   payer: Keypair
+
   constructor(payer: Keypair, connectionString: string, rpcUrl?: string) {
     super(connectionString, 'confirmed')
     this.axiosInstance = axios.create({
@@ -81,20 +81,20 @@ export class WrappedConnection extends Connection {
         id: assetId
       }
     })
-    console.debug('getAsset response:', response.data.result)
+    console.debug('getAsset response:', response.data)
     return response.data.result
   }
 
   async getAssetProof(assetId: any): Promise<any> {
     const response = await this.axiosInstance.post('get_asset_proof', {
       jsonrpc: '2.0',
-      method: 'getAssetProof',
+      method: 'get_asset_proof',
       id: 'rpd-op-123',
       params: {
         id: assetId
       }
     })
-    console.debug('getAssetProof response:', response.data.result)
+    console.debug('getAssetProof response:', response.data)
     return response.data.result
   }
 
@@ -112,7 +112,7 @@ export class WrappedConnection extends Connection {
       id: 'rpd-op-123',
       params: [assetId, sortBy, limit, page, before, after]
     })
-    console.debug('getAssetByOwner response:', response.data.result)
+    console.debug('getAssetByOwner response:', response.data)
     return response.data.result
   }
 }
@@ -481,7 +481,7 @@ async function decompressAsset(
 }
 
 const wholeFlow = async (opts: { decopres?: boolean } = {}) => {
-  const rpcUrl = 'https://rpc-devnet.aws.metaplex.com/'
+  const rpcUrl = getRpcUrl()
   const connectionString = 'https://liquid.devnet.rpcpool.com/5ebea512d12be102f53d319dafc8'
 
   // Generic secret key is used as a simple solution
@@ -541,23 +541,23 @@ const wholeFlow = async (opts: { decopres?: boolean } = {}) => {
   const assetString = assetId.toBase58()
   const newOwner = Keypair.generate()
   console.log('new owner', newOwner.publicKey.toBase58())
-
-  console.log('wait 2 min')
-  sleep(120000)
-
   console.log('asset PDA:', assetString)
-  await execute(
-    connectionWrapper.provider,
-    [
-      SystemProgram.transfer({
-        fromPubkey: connectionWrapper.provider.publicKey,
-        toPubkey: newOwner.publicKey,
-        lamports: LAMPORTS_PER_SOL
-      })
-    ],
-    [connectionWrapper.payer],
-    true
-  )
+
+  console.log('wait 15 sec')
+  await sleep(15000)
+
+  // await execute(
+  //   connectionWrapper.provider,
+  //   [
+  //     SystemProgram.transfer({
+  //       fromPubkey: connectionWrapper.provider.publicKey,
+  //       toPubkey: newOwner.publicKey,
+  //       lamports: LAMPORTS_PER_SOL
+  //     })
+  //   ],
+  //   [connectionWrapper.payer],
+  //   true
+  // )
 
   // transferring the compressed asset to a new owner
   await transferAsset(connectionWrapper, newOwner, canopyHeight, assetString)
