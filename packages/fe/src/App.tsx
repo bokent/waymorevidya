@@ -7,6 +7,7 @@ import { EditGamePage } from './pages/EditGamePage'
 import { HomePage } from './pages/HomePage'
 import { PublisherPage } from './pages/PublisherPage'
 import { ProductPage } from './pages/ProductPage'
+import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
 
 // see https://reactrouter.com/en/main/start/tutorial
 const router = createBrowserRouter([
@@ -40,6 +41,8 @@ const router = createBrowserRouter([
   }
 ])
 
+const queryClient = new QueryClient()
+
 const bokorGamesTheme: Partial<MantineTheme> = {
   colorScheme: 'dark',
   primaryColor: 'yellow'
@@ -48,7 +51,9 @@ const bokorGamesTheme: Partial<MantineTheme> = {
 export default function App() {
   return (
     <MantineProvider withGlobalStyles withNormalizeCSS theme={bokorGamesTheme}>
-      <RouterProvider router={router} />
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
     </MantineProvider>
   )
 }

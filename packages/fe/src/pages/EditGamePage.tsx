@@ -44,11 +44,10 @@ export function EditGamePage() {
       const res = (await (
         await fetch((process.env.REACT_APP_BACKEND_API ?? '') + '/getAllGames')
       ).json()) as RequiredField<Game, 'updatedAt'>[]
-      setGameDetails(
-        res
-          .filter((a) => a.appId.toString() == gameId)
-          .map((a) => ({ ...a, updatedAt: new Date(a.updatedAt) }))[0]
-      )
+      const found = res.find((a) => a.appId.toString() === gameId)
+      if (found) {
+        setGameDetails({ ...found, updatedAt: new Date(found.updatedAt) })
+      }
     }
     getGame()
   }, [gameId])
