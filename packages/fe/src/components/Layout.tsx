@@ -35,10 +35,10 @@ function LayoutHeader() {
             <Logo />
           </Link>
         </div>
-        <Container size={468} mx="20px">
+        <Container size={468} mx="24px">
           <SearchBar />
         </Container>
-        <Container mr="0" ml="auto">
+        <Container mr="0" ml="auto" px="0">
           <Wallet />
         </Container>
       </Flex>
@@ -52,7 +52,7 @@ type LayoutProps = {
 
 export function Layout(props: LayoutProps) {
   return (
-    <AppShell padding="md" navbar={<LayoutNavigation />} header={<LayoutHeader />}>
+    <AppShell padding="xl" navbar={<LayoutNavigation />} header={<LayoutHeader />}>
       {props.children}
     </AppShell>
   )
