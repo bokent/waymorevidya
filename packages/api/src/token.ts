@@ -33,6 +33,7 @@ interface SftConfig {
   imgUrl: string
   projectExternalUrl: string
   attributes?: Array<{
+    // eslint-disable-next-line
     trait_type?: string
     value?: string
   }>
@@ -68,7 +69,7 @@ export async function createSft(
   // Create collection signer object
   const collectionSigner: KeypairSigner = {
     publicKey: creatorKeypair.publicKey,
-    secretKey: creatorKeypair.secretKey,
+    secretKey: creatorKeypair.secretKey
   }
 
   // NOTE: we do not follow a convention here that the first creator is a CM address
@@ -105,7 +106,7 @@ export async function createSft(
     }
   }
   const obj = await metaplex.nfts().uploadMetadata(offChainMetadata)
-  const uri = obj.uri;
+  const uri = obj.uri
   logger.debug('URI of SFT metadata', uri)
 
   // Create CreateSftInput object
