@@ -1,28 +1,8 @@
 import mongoose, {
-  Aggregate,
-  AnyKeys,
-  AnyObject,
-  Callback,
-  CallbackError,
-  CallbackWithoutResult,
-  Connection,
-  Document,
-  FilterQuery,
-  HydratedDocument,
-  InsertManyOptions,
-  Model,
-  PipelineStage,
-  ProjectionType,
-  QueryOptions,
-  QueryWithHelpers,
   Schema,
   SchemaDefinition,
   SchemaDefinitionType,
   SchemaOptions,
-  UpdateQuery,
-  UpdateWithAggregationPipeline,
-  UpdateWriteOpResult,
-  startSession,
 } from "mongoose";
 import * as dotenv from "dotenv";
 dotenv.config();
