@@ -12,7 +12,7 @@ export async function getSteamApp(appId: any): Promise<any> {
   await gameModel.replaceOne({appId: appId}, {
     "appId": appId,
     "background": response.data.background,
-    "blockchain": "Solana",
+    "blockchain": "solana",
     "desc": response.data.short_description,
     "isPublished": false,
     "mainImage": response.data.header_image,

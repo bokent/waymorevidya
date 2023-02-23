@@ -17,27 +17,13 @@ export interface Item {
     category: string;
     value: string;
   }>;
+  updatedAt?: Date;
 }
 
-export const itemSchema = new MongoSchema<Item>({
-  appId: { type: Number, required: true },
-  marketHashName: { type: String, required: true },
-  name: { type: String, required: true },
-  // projectExternalUrl: { type: String },
-  imageUrl: { type: String, required: true },
-  direct_buy: { type: Boolean, required: true },
-  enabled: { type: Boolean, required: true },
-  startTime: { type: Date },
-  endTime: { type: Date },
-  lastRecordedPrice: { type: Number },
-  priceSOL: { type: Number },
-  tags: [
-    {
-      category: { type: String, required: true },
-      value: { type: String, required: true },
-    },
-  ],
-});
+export const itemSchema = new MongoSchema<Item>(
+  {},
+  { timestamps: true, strict: false }
+);
 
 export const itemModel = createMoogoseModel<Item>("processed_item", itemSchema);
 
@@ -47,4 +33,3 @@ export async function getItemsByAppId(appId: number, limit: number = -1) {
   }
   return await itemModel.find({ appId: appId }).limit(limit).exec();
 }
-

@@ -7,6 +7,7 @@ export function CreateGamePage() {
   const [activeStep, setActiveStep] = useState(0)
   const [progressValue, setProgressValue] = useState(0)
   const [isMigrating, setIsMigrating] = useState(false)
+  const [steamID, setSteamId] = useState(0)
 
   useEffect(() => {
     const updateProgressBar = () => setProgressValue((prevValue) => prevValue + 10 * Math.random())
@@ -26,7 +27,11 @@ export function CreateGamePage() {
         {/* Step 1 */}
         <Stepper.Step label="Step 1" description="Verify Steam App ID">
           <Space h="xl" />
-          <TextInput label="Waht is our Steam App ID?" />
+          <TextInput
+            label="What is our Steam App ID?"
+            onChange={(event) => setSteamId(Number(event.currentTarget.value))}
+            value={steamID}
+          />
         </Stepper.Step>
         {/* Step 2 */}
         <Stepper.Step label="Step 2" description="Import Game Assets">
@@ -36,7 +41,12 @@ export function CreateGamePage() {
             <Button onClick={() => setIsMigrating(true)}>Import assets from Steam</Button>
           )}
           {!isMigrating && progressValue >= 100 && (
-            <Button variant="outline" component={Link} to="/games/63f6f59efc64c730ae39b37a/edit">
+            <Button
+              variant="outline"
+              component={Link}
+              to={`/games/${steamID}/edit`}
+              id={steamID.toString()}
+            >
               Manage Game
             </Button>
           )}

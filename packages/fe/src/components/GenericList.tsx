@@ -35,7 +35,7 @@ function GenericCard(props: GameCardProps) {
 
 interface GenericItem {
   name: string
-  image: string
+  imageUrl: string
   updatedAt: Date
 }
 
@@ -50,8 +50,8 @@ export function GenericList(props: GenericListProps) {
       {props.header && <div>{props.header}</div>}
       <Grid mb="xl">
         {props.data.map((item: GenericItem) => (
-          <Grid.Col span="content">
-            <GenericCard name={item.name} image={item.image} updatedAt={item.updatedAt} />
+          <Grid.Col span="content" key={item.name}>
+            <GenericCard name={item.name} image={item.imageUrl} updatedAt={item.updatedAt} />
           </Grid.Col>
         ))}
       </Grid>

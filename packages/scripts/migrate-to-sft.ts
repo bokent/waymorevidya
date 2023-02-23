@@ -2,19 +2,6 @@ import { MongoClient, MongoClientOptions } from 'mongodb'
 import * as dotenv from 'dotenv'
 import { Item, Trait, Lootbox, itemModel, lootboxModel, traitModel, sftConfigModel } from 'shared/src/models'
 import { getItemsByAppId } from 'shared/src/models'
-import { PublicKey, Keypair, Connection } from '@solana/web3.js'
-import * as bs58 from 'bs58'
-import {
-  bundlrStorage,
-  keypairIdentity,
-  Metaplex,
-  CreatorInput,
-  KeypairSigner,
-  JsonMetadata,
-  CreateSftInput,
-  Sft,
-  SftWithToken
-} from '@metaplex-foundation/js'
 dotenv.config()
 
 const mongoUrl = process.env.MONGO_URL ?? ''
@@ -42,7 +29,7 @@ async function main() {
       attributes: mapTraits(item.tags),
       properties: {
         creators: {
-          address: new PublicKey('CmrMC3weTisa5DJN4m5qKNLts7E2byzZMq9vfj4MxazP').toBase58(),
+          address: "CmrMC3weTisa5DJN4m5qKNLts7E2byzZMq9vfj4MxazP",
           share: 100
         },
         files: [

@@ -1,7 +1,7 @@
 import { PublicKey } from "@solana/web3.js";
 import { createMoogoseModel, MongoSchema } from "./shared";
 
-type avaliableBlockchains = "solana" | "ethereum" | "polygon"
+type AvaliableBlockchains = "solana" | "ethereum" | "polygon"
 
 export interface Game {
   appId: number;
@@ -10,8 +10,9 @@ export interface Game {
   mccAddress: string;
   name: string;
   desc: string;
-  blockchain: string;
+  blockchain: AvaliableBlockchains;
   isPublished: boolean;
+  updatedAt?: Date;
 }
 
 export const gameSchema = new MongoSchema<Game>({
@@ -23,6 +24,6 @@ export async function getGamesByAppId(appId: number) {
   return await gameModel.find({ appId: appId }).exec();
 }
 
-export async function getAllGames() {
+export async function getAllGames(): Promise<Game[]> {
   return await gameModel.find().exec()
 }

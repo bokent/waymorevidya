@@ -4,7 +4,7 @@ import { createMoogoseModel, MongoSchema } from "./shared";
 export interface Lootbox {
   appId: number;
   name: string;
-  //   imgUrl: string;
+  imageUrl: string;
   items: Array<{
     marketHashName: string;
     rarity: number;
@@ -14,9 +14,10 @@ export interface Lootbox {
   enabled: boolean;
   startTime?: Date;
   endTime?: Date;
+  updatedAt?: Date;
 }
 
-export const lootboxSchema = new MongoSchema<Lootbox>({}, {strict: false});
+export const lootboxSchema = new MongoSchema<Lootbox>({}, {strict: false, timestamps: true});
 
 export const lootboxModel = createMoogoseModel<Lootbox>(
   "game_lootbox",

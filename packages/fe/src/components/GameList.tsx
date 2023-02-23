@@ -2,8 +2,10 @@ import { ReactNode } from 'react'
 import { Card, Flex, Image, Text, Badge, Button, Group, Grid } from '@mantine/core'
 import { IconEdit } from '@tabler/icons-react'
 import formatDistance from 'date-fns/formatDistance'
+import { Game } from 'shared/src/models'
 
 type GameCardProps = {
+  appId: number
   name: string
   mainImage: string
   updatedAt: Date
@@ -38,34 +40,23 @@ function GameCard(props: GameCardProps) {
   )
 }
 
-type Blockchain = 'solana'
-
-interface Game {
-  appId: string
-  isPublished: boolean
-  name: string
-  mainImage: string
-  blockchain: Blockchain
-  updatedAt: Date
+export type GameListProps = {
+  header: ReactNode
+  data: GameCardProps[]
 }
-
-type GameListProps = {
-  header?: ReactNode
-  data: Game[]
-}
-
 export function GameList(props: GameListProps) {
   return (
     <>
       {props.header && <div>{props.header}</div>}
       <Grid mb="xl">
-        {props.data.map((item: Game) => (
-          <Grid.Col span="content">
+        {props.data.map((item) => (
+          <Grid.Col span="content" key={item.appId}>
             <GameCard
               name={item.name}
               isPublished={item.isPublished}
               updatedAt={item.updatedAt}
               mainImage={item.mainImage}
+              appId={item.appId}
             />
           </Grid.Col>
         ))}

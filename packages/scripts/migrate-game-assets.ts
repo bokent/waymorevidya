@@ -87,6 +87,7 @@ async function migrate_data(appId: number) {
       enabled: true,
       items: proper_matches.map((a) => ({ marketHashName: a, rarity: temp_rarity })),
       name: lootbox_info.market_hash_name,
+      imageUrl: lootbox_info.image,
       // lastRecordedPrice: lootbox_info.median_avg_prices_15days?.pop()[1],
       // priceSOL: lootbox_info.median_avg_prices_15days?.pop()[1] / HARD_CODE_SOL_USD
       priceSOL: 1

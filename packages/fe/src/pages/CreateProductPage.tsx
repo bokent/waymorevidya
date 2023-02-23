@@ -22,7 +22,7 @@ export function CreateProductPage() {
       <GenericList
         data={[
           {
-            image:
+            imageUrl:
               'https://cdn.akamai.steamstatic.com/steamcommunity/public/images/clans//3703047/4263c0bbe42c6f0dbc573f9748e1b69fff6d64b5.png',
             name: 'Gold Power Hammer',
             updatedAt: new Date()

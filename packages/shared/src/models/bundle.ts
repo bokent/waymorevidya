@@ -19,3 +19,4 @@ export const bundleModel = createMoogoseModel<Bundle>(
   "game_bundle",
   bundleSchema
 );
+
