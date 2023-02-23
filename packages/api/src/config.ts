@@ -56,8 +56,7 @@ export function getCorsConfig() {
     'https://waymorejpegs.xyz'
   ]
   if (isDevnet()) {
-    const port = process.env.PORT || DEFAULT_APP_PORT
-    origin.push(`http://localhost:${port}`)
+    origin.push(`http://localhost:3000`)
   }
   return { origin }
 }
