@@ -3,6 +3,7 @@ import { Anchor, AppShell, Container, Navbar, Header, Flex, NavLink } from '@man
 import { NavLink as RouterNavLink, Link } from 'react-router-dom'
 import { IconDeviceGamepad2, IconRocket, IconBrandTwitter } from '@tabler/icons-react'
 import { SearchBar } from './SearchBar'
+import { Wallet } from './Wallet'
 import { Logo } from './Logo'
 
 function LayoutNavigation() {
@@ -28,14 +29,17 @@ function LayoutNavigation() {
 function LayoutHeader() {
   return (
     <Header height={55 + 28 + 28} pt="40px" pb="40px" pl="xl" pr="xl" withBorder={false}>
-      <Flex gap="lg">
+      <Flex gap="lg" align="center">
         <div>
           <Link to="/">
             <Logo />
           </Link>
         </div>
-        <Container size={468} pt="12px" pb="12px" mx="24px">
+        <Container size={468} mx="20px">
           <SearchBar />
+        </Container>
+        <Container mr="0" ml="auto">
+          <Wallet />
         </Container>
       </Flex>
     </Header>
