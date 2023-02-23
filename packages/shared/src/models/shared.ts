@@ -24,7 +24,7 @@ import mongoose, {
   UpdateWriteOpResult,
   startSession,
 } from "mongoose";
-import dotenv from "dotenv";
+import * as dotenv from "dotenv";
 dotenv.config();
 
 const MONGO_URL = process.env.MONGO_URL ?? "";

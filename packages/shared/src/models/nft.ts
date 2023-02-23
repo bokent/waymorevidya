@@ -32,8 +32,9 @@ import { createMoogoseModel, MongoSchema } from "./shared";
 
 
 
-interface SftConfig {
+export interface SftConfig {
   mccAddress: PublicKey;
+
   collection: {
     name: string;
     symbol: string;
@@ -59,10 +60,10 @@ interface SftConfig {
 
 const sftConfigSchema = new MongoSchema<SftConfig>(
   {
-    mccAddress: { index: true},
   },
   {
     collection: "sft_config",
+    strict: false,
   }
 );
 

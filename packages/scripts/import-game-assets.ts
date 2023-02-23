@@ -1,6 +1,6 @@
 import { MongoClient, MongoClientOptions } from "mongodb";
 import axios from "axios";
-import dotenv from "dotenv";
+import * as dotenv from "dotenv";
 import { LimitedConcurrency } from "./helper";
 import axiosRetry from 'axios-retry';
 

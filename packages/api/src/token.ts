@@ -25,8 +25,8 @@ interface SftConfig {
   mccAddress: PublicKey
   collection: {
     name: string
-    symbol: string
-    description: string
+    symbol?: string
+    description?: string
     family?: string
   }
   sellerFeeBasisPoints: number
