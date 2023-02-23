@@ -16,9 +16,7 @@ import { DEFAULT_APP_PORT, getCorsConfig } from './config'
 const app = express()
 const PORT = process.env.PORT || DEFAULT_APP_PORT
 
-app.use(
-  cors(getCorsConfig())
-)
+app.use(cors(getCorsConfig()))
 
 app.post('/ixs/mint', (_req: Request, res: Response) => {
   res.status(501).json({ msg: 'mot yet implemented' })
