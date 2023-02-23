@@ -5,8 +5,10 @@ dotenv.config()
 import * as express from 'express'
 // eslint-disable-next-line
 import { Request, Response, NextFunction } from 'express'
+import { getLootboxsByAppId } from 'shared/src/models'
 // eslint-disable-next-line
 import { ERROR, ErrorCode } from './codes'
+import { getGames, getItemsByAppId } from './game'
 import { getSteamApp } from './steam'
 
 const app = express()
@@ -20,6 +22,25 @@ app.get('/health', (_req: Request, res: Response) => {
   res.json({ status: 'healthy' })
 })
 
+app.get('/getAllItems/:appId', async (req: Request, res: Response) => {
+  const gameItems = await getItemsByAppId(Number.parseInt(req.params.appId), 1000)
+  console.log(gameItems)
+  res.json(gameItems)
+})
+
+app.get('/getAllProducts/:appId', async (req: Request, res: Response) => {
+  const lootboxs = await getLootboxsByAppId(Number.parseInt(req.params.appId), 1000)
+  console.log(lootboxs)
+  res.json(lootboxs)
+})
+
+app.get('/getAllGames', async (req: Request, res: Response) => {
+  const games = await getGames()
+  console.log(games)
+  res.json(games)
+})
+
+// decodeURI()
 app.get('/getSteamApp/:appId', async (req: Request, res: Response) => {
   const steamApp = await getSteamApp(req.params.appId)
   console.log(steamApp)

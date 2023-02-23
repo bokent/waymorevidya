@@ -41,6 +41,10 @@ export const itemSchema = new MongoSchema<Item>({
 
 export const itemModel = createMoogoseModel<Item>("processed_item", itemSchema);
 
-export async function getItemsByAppId(appId: number) {
-  return await itemModel.find({ appId: appId }).exec();
+export async function getItemsByAppId(appId: number, limit: number = -1) {
+  if (limit < 0) {
+    return await itemModel.find({ appId: appId }).exec();
+  }
+  return await itemModel.find({ appId: appId }).limit(limit).exec();
 }
+
