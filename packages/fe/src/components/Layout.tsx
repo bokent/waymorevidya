@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
-import { AppShell, Container, Navbar, Header, Box, Flex, NavLink } from '@mantine/core'
+import { Anchor, AppShell, Container, Navbar, Header, Flex, NavLink } from '@mantine/core'
 import { NavLink as RouterNavLink, Link } from 'react-router-dom'
-import { IconDeviceGamepad2, IconRocket } from '@tabler/icons-react'
+import { IconDeviceGamepad2, IconRocket, IconBrandTwitter } from '@tabler/icons-react'
 import { SearchBar } from './SearchBar'
 import { Logo } from './Logo'
 
@@ -17,7 +17,9 @@ function LayoutNavigation() {
         </RouterNavLink>
       </Navbar.Section>
       <Navbar.Section mb="xl" pl="20px">
-        <Box sx={{ margin: '0 auto', width: '200px' }}>Footer</Box>
+        <Anchor href="https://twitter.com/bokorgames" sx={{ marginLeft: '4rem' }}>
+          <IconBrandTwitter />
+        </Anchor>
       </Navbar.Section>
     </Navbar>
   )

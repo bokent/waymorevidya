@@ -1,4 +1,4 @@
-import { MantineProvider } from '@mantine/core'
+import { MantineProvider, MantineTheme } from '@mantine/core'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { GamesPage } from './pages/GamesPage'
 import { HomePage } from './pages/HomePage'
@@ -20,9 +20,14 @@ const router = createBrowserRouter([
   }
 ])
 
+const bokorGamesTheme: Partial<MantineTheme> = {
+  colorScheme: 'dark',
+  primaryColor: 'yellow'
+}
+
 export default function App() {
   return (
-    <MantineProvider withGlobalStyles withNormalizeCSS>
+    <MantineProvider withGlobalStyles withNormalizeCSS theme={bokorGamesTheme}>
       <RouterProvider router={router} />
     </MantineProvider>
   )
