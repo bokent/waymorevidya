@@ -24,7 +24,7 @@ function GenericCard(props: GameCardProps) {
         {formatDistance(props.updatedAt, new Date(), { includeSeconds: true })}
       </Text>
 
-      <Flex justify="flex-end" mt="auto">
+      <Flex>
         <Button variant="subtle" color="gray" compact mt="xs" size="xs" pr="0">
           <IconEdit />
         </Button>
@@ -42,6 +42,7 @@ interface GenericItem {
 type GenericListProps = {
   header?: ReactNode
   data: GenericItem[]
+  limit?: number
 }
 
 export function GenericList(props: GenericListProps) {
@@ -49,7 +50,7 @@ export function GenericList(props: GenericListProps) {
     <>
       {props.header && <div>{props.header}</div>}
       <Grid mb="xl">
-        {props.data.map((item: GenericItem) => (
+        {props.data.slice(0, props.limit || 5).map((item: GenericItem) => (
           <Grid.Col span="content" key={item.name}>
             <GenericCard name={item.name} image={item.imageUrl} updatedAt={item.updatedAt} />
           </Grid.Col>
