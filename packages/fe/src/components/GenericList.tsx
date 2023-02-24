@@ -7,6 +7,7 @@ type GameCardProps = {
   name: string
   image: string
   updatedAt: Date
+  displayActions: boolean
 }
 
 function GenericCard(props: GameCardProps) {
@@ -24,11 +25,13 @@ function GenericCard(props: GameCardProps) {
         {formatDistance(props.updatedAt, new Date(), { includeSeconds: true })}
       </Text>
 
-      <Flex>
-        <Button variant="subtle" color="gray" compact mt="xs" size="xs" pr="0">
-          <IconEdit />
-        </Button>
-      </Flex>
+      {props.displayActions && (
+        <Flex>
+          <Button variant="subtle" color="gray" compact mt="xs" size="xs" pr="0">
+            <IconEdit />
+          </Button>
+        </Flex>
+      )}
     </Card>
   )
 }
@@ -43,6 +46,7 @@ type GenericListProps = {
   header?: ReactNode
   data: GenericItem[]
   limit?: number
+  diplayActions?: boolean
 }
 
 export function GenericList(props: GenericListProps) {
@@ -52,7 +56,12 @@ export function GenericList(props: GenericListProps) {
       <Grid mb="xl">
         {props.data.slice(0, props.limit || 5).map((item: GenericItem) => (
           <Grid.Col span="content" key={item.name}>
-            <GenericCard name={item.name} image={item.imageUrl} updatedAt={item.updatedAt} />
+            <GenericCard
+              name={item.name}
+              image={item.imageUrl}
+              updatedAt={item.updatedAt}
+              displayActions={props.diplayActions ?? true}
+            />
           </Grid.Col>
         ))}
       </Grid>
