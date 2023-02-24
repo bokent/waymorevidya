@@ -53,7 +53,8 @@ export function getCorsConfig() {
   const origin = [
     'https://waymorevidya.pages.dev',
     'https://waymorevidya.io',
-    'https://waymorejpegs.xyz'
+    'https://waymorejpegs.xyz',
+    'https://app.bokor.games'
   ]
   if (isDevnet()) {
     origin.push(`http://localhost:3000`)
