@@ -4,7 +4,7 @@ import { GamesPage } from './pages/GamesPage'
 import { CreateGamePage } from './pages/CreateGamePage'
 import { CreateProductPage } from './pages/CreateProductPage'
 import { EditGamePage } from './pages/EditGamePage'
-import { HomePage } from './pages/HomePage'
+// import { HomePage } from './pages/HomePage'
 import { PublisherPage } from './pages/PublisherPage'
 import { ProductPage } from './pages/ProductPage'
 import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
@@ -14,7 +14,7 @@ import { EditProductPage } from './pages/EditProductPage'
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <HomePage />
+    element: <PublisherPage />
   },
   {
     path: '/games',
