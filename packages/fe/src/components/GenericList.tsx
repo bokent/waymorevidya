@@ -11,20 +11,20 @@ type GameCardProps = {
 
 function GenericCard(props: GameCardProps) {
   return (
-    <Card shadow="sm" p="lg">
+    <Card shadow="sm" p="lg" sx={{ width: 210, height: 260 }}>
       <Card.Section>
         <Image fit="cover" src={props.image} height={120} width={250} />
       </Card.Section>
 
-      <Group mt="md" spacing="sm">
-        <Text weight={500}>{props.name}</Text>
-      </Group>
+      <Text mt="md" weight={500} lineClamp={2}>
+        {props.name}
+      </Text>
 
       <Text size="sm" color="dimmed">
         {formatDistance(props.updatedAt, new Date(), { includeSeconds: true })}
       </Text>
 
-      <Flex justify="flex-end">
+      <Flex justify="flex-end" mt="auto">
         <Button variant="subtle" color="gray" compact mt="xs" size="xs" pr="0">
           <IconEdit />
         </Button>
