@@ -1,5 +1,6 @@
 import axios, { Axios } from 'axios'
-import { Game, gameModel } from 'shared/src/models'
+import { gameModel } from 'shared/src/models'
+
 const axiosInstance = axios.create({
   baseURL: `https://api.steamapis.com`
 })
