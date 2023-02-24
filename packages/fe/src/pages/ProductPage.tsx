@@ -42,6 +42,8 @@ export function ProductPage(props: ProductPageProps) {
   const gameId = '570'
   const [numberOfMintKeys, setNumberOfMintKeys] = useState(3)
   const [numberMinted, setNumberMinted] = useState(0)
+  const [initialSlide, setInitialSlide] = useState(0)
+  const [stopSlider, setStopSlider] = useState(false)
   const [items, setItems] = useState<RequiredField<Item, 'updatedAt'>[]>([])
   const [product, setProduct] = useState<Lootbox>({
     appId: 0,
@@ -97,6 +99,7 @@ export function ProductPage(props: ProductPageProps) {
   const handleUnlock = useCallback(() => {
     setNumberMinted((prevVal) => prevVal - 1)
     setNumberOfMintKeys((prevVal) => prevVal - 1)
+    setInitialSlide(10)
   }, [])
 
   useEffect(() => {
@@ -144,6 +147,9 @@ export function ProductPage(props: ProductPageProps) {
         header={<Title order={2}>Items</Title>}
         diplayActions={false}
         editUrl={() => ''}
+        limit={50}
+        mode="slider"
+        stopSlider={stopSlider}
       />
       <Flex gap="sm" align="center">
         <Text>Use {product.name} key</Text>

@@ -1,8 +1,12 @@
-import { ReactNode } from 'react'
-import { Card, Flex, Image, Text, Button, Group, Grid } from '@mantine/core'
+import { ReactNode, useEffect, useRef } from 'react'
+import { Card, Flex, Image, Text, Button, Grid } from '@mantine/core'
+import Autoplay from 'embla-carousel-autoplay'
 import { IconEdit } from '@tabler/icons-react'
 import formatDistance from 'date-fns/formatDistance'
 import { Link } from 'react-router-dom'
+import { Carousel } from '@mantine/carousel'
+// import Slider from 'react-slick'
+// import { AutoRotatingCarousel, Slide } from 'material-auto-rotating-carousel'
 
 type GameCardProps = {
   name: string
@@ -14,7 +18,7 @@ type GameCardProps = {
 
 function GenericCard(props: GameCardProps) {
   return (
-    <Card shadow="sm" p="lg" sx={{ width: 210, height: 260 }}>
+    <Card p="lg" sx={{ width: 210, height: 260 }}>
       <Card.Section>
         <Image fit="cover" src={props.image} height={120} width={250} />
       </Card.Section>
@@ -58,9 +62,77 @@ type GenericListProps<T extends GenericItem> = {
   data: T[]
   limit?: number
   diplayActions?: boolean
+  mode?: 'grid' | 'slider'
+  stopSlider?: boolean
 }
 
 export function GenericList<T extends GenericItem>(props: GenericListProps<T>) {
+  const autoplay = useRef(Autoplay({ delay: 260 }))
+
+  // useEffect(() => {
+  //   if (props.stopSlider) {
+  //     autoplay.current.stop()
+  //   } else {
+  //     autoplay.current.play()
+  //   }
+  // }, [props.stopSlider])
+
+  if (props.mode === 'slider') {
+    // return (
+    //   <AutoRotatingCarousel open autoplay interval={300}>
+    //     {props.data.slice(0, props.limit || 5).map((item: GenericItem) => (
+    //       <Slide
+    //         media={<img src={item.imageUrl} />}
+    //         title={item.name}
+    //         subtitle={formatDistance(item.updatedAt, new Date(), { includeSeconds: true })}
+    //       />
+    //     ))}
+    //   </AutoRotatingCarousel>
+    // )
+    // Emba carousel and Mantine Carousel
+    return (
+      <>
+        {props.header && <div>{props.header}</div>}
+        <Carousel
+          height={260}
+          slideSize={250}
+          loop
+          align="start"
+          slidesToScroll={2}
+          mb="xl"
+          plugins={[autoplay.current]}
+        >
+          {props.data.slice(0, props.limit || 5).map((item: GenericItem) => (
+            <Carousel.Slide>
+              <GenericCard
+                name={item.name}
+                image={item.imageUrl}
+                updatedAt={item.updatedAt}
+                editUrl=""
+                displayActions={props.diplayActions ?? true}
+              />
+            </Carousel.Slide>
+          ))}
+        </Carousel>
+      </>
+    )
+    // react-slick
+    // return (
+    //   <Slider dots={false} arrows={false} infinite slidesToShow={5} slidesToScroll={1}>
+    //     {props.data.slice(0, props.limit || 5).map((item: GenericItem) => (
+    //       <div>
+    //         <GenericCard
+    //           name={item.name}
+    //           image={item.imageUrl}
+    //           updatedAt={item.updatedAt}
+    //           displayActions={props.diplayActions ?? true}
+    //         />
+    //       </div>
+    //     ))}
+    //   </Slider>
+    // )
+  }
+
   return (
     <>
       {props.header && <div>{props.header}</div>}
