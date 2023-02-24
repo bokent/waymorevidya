@@ -1,5 +1,5 @@
 import { Box, Button, Flex, Image, SimpleGrid, Title, Text } from '@mantine/core'
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Layout } from '../components/Layout'
 import { GenericList } from '../components/GenericList'
 
@@ -17,9 +17,28 @@ type UnlockState = {
   isDisabled: boolean
 }
 
+const generateDate = (str: string) => {
+  const arr = str.split('')
+  return new Date(
+    1677155963071 +
+      (Math.abs(
+        arr.reduce(
+          (hashCode, currentVal) =>
+            (hashCode = currentVal.charCodeAt(0) + (hashCode << 6) + (hashCode << 16) - hashCode),
+          0
+        )
+      ) %
+        60000)
+  )
+}
+
+type RequiredField<T, K extends keyof T> = T & Required<Pick<T, K>>
+
 export function ProductPage(props: ProductPageProps) {
+  const gameId = '570'
   const [numberOfMintKeys, setNumberOfMintKeys] = useState(3)
   const [numberMinted, setNumberMinted] = useState(0)
+  const [products, setProducts] = useState<RequiredField<any, 'updatedAt'>[]>([])
 
   const mintState: MintState = useMemo(() => {
     return {
@@ -56,6 +75,23 @@ export function ProductPage(props: ProductPageProps) {
     setNumberOfMintKeys((prevVal) => prevVal - 1)
   }, [])
 
+  useEffect(() => {
+    if (!gameId) {
+      return
+    }
+    const getProducts = async () => {
+      let res = (await (
+        await fetch((process.env.REACT_APP_BACKEND_API ?? '') + '/getAllProducts/' + gameId)
+      ).json()) as RequiredField<any, 'updatedAt'>[]
+      res = res.map((a) => ({
+        ...a,
+        updatedAt: a.updatedAt ? new Date(a.updatedAt) : generateDate(a.name)
+      }))
+      setProducts(res)
+    }
+    getProducts()
+  }, [gameId])
+
   return (
     <Layout>
       <SimpleGrid cols={2} mb="xl">
@@ -63,31 +99,24 @@ export function ProductPage(props: ProductPageProps) {
           <Title mb="xl">
             {props.isPreview ? 'PREVIEW: ' : null}TREASURE OF THE CRIMSON WITNESS 2022
           </Title>
-          <Button disabled={mintState.isDisabled} onClick={handleMint}>
-            {mintState.buttonText}
-          </Button>
+          <Flex gap="sm" align="center">
+            <Button disabled={mintState.isDisabled} onClick={handleMint}>
+              {mintState.buttonText}
+            </Button>
+            {numberMinted > 0 && <Text> {numberMinted} minted</Text>}
+          </Flex>
         </Box>
         <Image src="https://i.pinimg.com/originals/40/4e/4d/404e4dcf67eca00d07729ecf9967d137.png" />
       </SimpleGrid>
-      <GenericList
-        data={[
-          {
-            imageUrl:
-              'https://cdn.akamai.steamstatic.com/steamcommunity/public/images/clans//3703047/4263c0bbe42c6f0dbc573f9748e1b69fff6d64b5.png',
-            name: 'Gold Power Hammer',
-            updatedAt: new Date()
-          }
-        ]}
-        header={<Title order={2}>Items</Title>}
-      />
+      <GenericList data={products} header={<Title order={2}>Items</Title>} diplayActions={false} />
       <Flex gap="sm" align="center">
         <Text>Use TREASURE OF THE CRIMSON WITNESS 2022 key</Text>
         <Button disabled={unlockState.isDisabled} onClick={handleUnlock}>
           {unlockState.buttonText}
         </Button>
         <Text>
-          {numberOfMintKeys} key{numberOfMintKeys > 1 ? 's' : ''} left and {numberMinted} treasury
-          {numberMinted > 1 ? 's' : ''} left
+          {numberOfMintKeys} key{numberOfMintKeys > 1 ? 's' : ''} left and {numberMinted}{' '}
+          {numberMinted > 1 ? 'treasuries' : 'treasury'} left
         </Text>
       </Flex>
     </Layout>
