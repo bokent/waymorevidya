@@ -2,12 +2,14 @@ import { ReactNode } from 'react'
 import { Card, Flex, Image, Text, Button, Group, Grid } from '@mantine/core'
 import { IconEdit } from '@tabler/icons-react'
 import formatDistance from 'date-fns/formatDistance'
+import { Link } from 'react-router-dom'
 
 type GameCardProps = {
   name: string
   image: string
   updatedAt: Date
   displayActions: boolean
+  editUrl: string
 }
 
 function GenericCard(props: GameCardProps) {
@@ -27,7 +29,16 @@ function GenericCard(props: GameCardProps) {
 
       {props.displayActions && (
         <Flex>
-          <Button variant="subtle" color="gray" compact mt="xs" size="xs" pr="0">
+          <Button
+            variant="subtle"
+            color="gray"
+            compact
+            mt="xs"
+            size="xs"
+            pr="0"
+            component={Link}
+            to={props.editUrl}
+          >
             <IconEdit />
           </Button>
         </Flex>
@@ -41,26 +52,27 @@ interface GenericItem {
   imageUrl: string
   updatedAt: Date
 }
-
-type GenericListProps = {
+type GenericListProps<T extends GenericItem> = {
   header?: ReactNode
-  data: GenericItem[]
+  editUrl?: (item: T) => string
+  data: T[]
   limit?: number
   diplayActions?: boolean
 }
 
-export function GenericList(props: GenericListProps) {
+export function GenericList<T extends GenericItem>(props: GenericListProps<T>) {
   return (
     <>
       {props.header && <div>{props.header}</div>}
       <Grid mb="xl">
-        {props.data.slice(0, props.limit || 5).map((item: GenericItem) => (
+        {props.data.slice(0, props.limit || 5).map((item: T) => (
           <Grid.Col span="content" key={item.name}>
             <GenericCard
               name={item.name}
               image={item.imageUrl}
               updatedAt={item.updatedAt}
               displayActions={props.diplayActions ?? true}
+              editUrl={props.editUrl ? props.editUrl(item) : ''}
             />
           </Grid.Col>
         ))}

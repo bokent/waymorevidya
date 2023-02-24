@@ -97,9 +97,10 @@ export function EditGamePage() {
       <Container px="0" mx="0" mb="xl">
         <GameForm initialValues={gameDetails} />
       </Container>
-      <GenericList data={items} header={<Title order={2}>Items</Title>} />
+      <GenericList data={items} header={<Title order={2}>Items</Title>} editUrl={(item) => ``} />
       <GenericList
         data={products}
+        editUrl={(product) => `/products/${product.appId}/${encodeURIComponent(product.name)}/edit`}
         header={
           <Flex justify="space-between">
             <Title order={2} mb="md">

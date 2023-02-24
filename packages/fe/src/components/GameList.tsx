@@ -2,6 +2,7 @@ import { ReactNode } from 'react'
 import { Card, Flex, Image, Text, Badge, Button, Group, Grid } from '@mantine/core'
 import { IconEdit } from '@tabler/icons-react'
 import formatDistance from 'date-fns/formatDistance'
+import { Link } from 'react-router-dom'
 
 type GameCardProps = {
   appId: number
@@ -31,7 +32,16 @@ function GameCard(props: GameCardProps) {
         <Button variant="subtle" color="gray" compact mt="md" size="xs" pl="0">
           Store page
         </Button>
-        <Button variant="subtle" color="gray" compact mt="md" size="xs" pr="0">
+        <Button
+          variant="subtle"
+          component={Link}
+          color="gray"
+          compact
+          mt="md"
+          size="xs"
+          pr="0"
+          to={`/games/${props.appId}/edit`}
+        >
           <IconEdit />
         </Button>
       </Flex>

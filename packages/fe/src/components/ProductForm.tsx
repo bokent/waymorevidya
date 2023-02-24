@@ -3,7 +3,7 @@ import { Formik } from 'formik'
 import { IconPercentage } from '@tabler/icons-react'
 import { Link } from 'react-router-dom'
 
-interface ProductFormValues {
+export interface ProductFormValues {
   image: string
   name: string
   productType: '' | 'single' | 'bundle' | 'lootbox'
@@ -169,7 +169,7 @@ export function ProductForm(props: ProductFormProps) {
           <Button
             variant="outline"
             component={Link}
-            to="/products/63f6f59efc64c730ae39b37b/preview"
+            to={`/products/${props.initialValues.name}/preview`}
           >
             Preview
           </Button>

@@ -257,6 +257,7 @@ importers:
       mongoose: ^6.9.2
       prettier: 2.4.1
       ts-node: ^10.9.1
+      ts-retry-promise: ^0.7.0
       typescript: 4.7.4
     dependencies:
       '@metaplex-foundation/js': 0.18.1
@@ -272,6 +273,7 @@ importers:
       express: 4.18.2
       mongoose: 6.9.2
       ts-node: 10.9.1_yacyvs23jolzrmic77hkivodau
+      ts-retry-promise: 0.7.0
       typescript: 4.7.4
     devDependencies:
       '@typescript-eslint/eslint-plugin': 5.52.0_n6kzgifuriz7iljaxbhuh3frsu

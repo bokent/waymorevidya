@@ -8,7 +8,7 @@ import { Request, Response, NextFunction } from 'express'
 import * as bodyParser from 'body-parser'
 import { getLootboxsByAppId } from 'shared/src/models'
 import { ERROR, ErrorCode } from './codes'
-import { getGames, getItemsByAppId } from './game'
+import { getGames, getItemsByAppId, getLootbox, getLootboxItems } from './game'
 import { getSteamApp } from './steam'
 import * as cors from 'cors'
 import { DEFAULT_APP_PORT, getCorsConfig, getRpcUrl } from './config'
@@ -66,6 +66,17 @@ app.get('/getItemCount/:appId', async (req: Request, res: Response) => {
   const steamApp = await getSteamApp(req.params.appId)
   console.log(steamApp)
   res.json(steamApp)
+})
+app.get('/getProduct/:appId/:name', async (req: Request, res: Response) => {
+  const product = await getLootbox(Number.parseInt(req.params.appId), req.params.name)
+  console.log(product)
+  res.json(product)
+})
+app.get('/getProductItems/:appId/:name', async (req: Request, res: Response) => {
+  console.log(Number.parseInt(req.params.appId), req.params.name)
+  const product = await getLootboxItems(Number.parseInt(req.params.appId), req.params.name)
+  console.log(product)
+  res.json(product)
 })
 
 app.post('/createGame', async (req: Request, res: Response) => {
