@@ -45,7 +45,7 @@ export function getStorageConfig() {
   return {
     address: 'https://devnet.bundlr.network',
     providerUrl: 'https://api.devnet.solana.com',
-    timeout: 30000
+    timeout: 60000,
   }
 }
 
