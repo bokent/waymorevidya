@@ -1,19 +1,6 @@
 import { PublicKey } from "@solana/web3.js";
+import { Game } from "../types";
 import { createMoogoseModel, MongoSchema } from "./shared";
-
-type AvaliableBlockchains = "solana" | "ethereum" | "polygon"
-
-export interface Game {
-  appId: number;
-  mainImage: string;
-  background: string;
-  mccAddress: string;
-  name: string;
-  desc: string;
-  blockchain: AvaliableBlockchains;
-  isPublished: boolean;
-  updatedAt?: Date;
-}
 
 export const gameSchema = new MongoSchema<Game>({
 }, {strict: false, timestamps: true});

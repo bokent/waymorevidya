@@ -46,7 +46,13 @@ app.get('/getAllGames', async (req: Request, res: Response) => {
 
 // decodeURI()
 app.get('/getSteamApp/:appId', async (req: Request, res: Response) => {
-  const steamApp = await getSteamApp(req.params.appId)
+  const steamApp = await getSteamApp(req.params.appId, false)
+  console.log(steamApp)
+  res.json(steamApp)
+})
+
+app.get('/generateSteamAppPage/:appId', async (req: Request, res: Response) => {
+  const steamApp = await getSteamApp(req.params.appId, true)
   console.log(steamApp)
   res.json(steamApp)
 })

@@ -1,6 +1,8 @@
 import { MongoClient, MongoClientOptions } from 'mongodb'
 import * as dotenv from "dotenv";
-import { Item, Trait, Lootbox, itemModel, lootboxModel, traitModel } from 'shared/src/models'
+import { itemModel, lootboxModel, traitModel } from 'shared/src/models'
+import { Item, Lootbox, Trait } from 'shared/src/types'
+
 dotenv.config()
 
 const mongoUrl = process.env.MONGO_URL ?? ''

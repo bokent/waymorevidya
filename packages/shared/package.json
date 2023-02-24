@@ -5,7 +5,8 @@
   "description": "",
   "main": "dist/index.js",
   "exports": {
-    "./src/models": "./dist/models/index.js"
+    "./src/models": "./dist/models/index.js",
+    "./src/types": "./dist/types.js"
   },
   "scripts": {
     "start": "node dist/index.js",

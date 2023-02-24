@@ -1,17 +1,7 @@
 import { PublicKey } from "@solana/web3.js";
+import { Bundle } from "../types";
 import { createMoogoseModel, MongoSchema } from "./shared";
 
-export interface Bundle {
-  appId: number;
-  name: string;
-  //   imgUrl: string;
-  items: string[];
-  priceSOL: number;
-  lastRecordedPrice?: number;
-  enabled: boolean;
-  startTime?: Date;
-  endTime?: Date;
-}
 
 export const bundleSchema = new MongoSchema<Bundle>({}, {strict: false});
 

@@ -3,7 +3,7 @@ import { Layout } from '../components/Layout'
 import { GameList } from '../components/GameList'
 import { IconPlus } from '@tabler/icons-react'
 import { useEffect, useState } from 'react'
-import { Game } from 'shared/src/models'
+import { Game } from 'shared/src/types'
 import { Link } from 'react-router-dom'
 type RequiredField<T, K extends keyof T> = T & Required<Pick<T, K>>
 export function PublisherPage() {

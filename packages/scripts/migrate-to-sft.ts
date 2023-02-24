@@ -1,6 +1,7 @@
 import { MongoClient, MongoClientOptions } from 'mongodb'
 import * as dotenv from 'dotenv'
-import { Item, Trait, Lootbox, itemModel, lootboxModel, traitModel, sftConfigModel } from 'shared/src/models'
+import { itemModel, lootboxModel, traitModel, sftConfigModel } from 'shared/src/models'
+import { Item, Trait, Lootbox } from 'shared/src/types'
 import { getItemsByAppId } from 'shared/src/models'
 dotenv.config()
 

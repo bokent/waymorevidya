@@ -5,7 +5,7 @@ import { GenericList } from '../components/GenericList'
 import { IconPlus } from '@tabler/icons-react'
 import { Link, useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { Game, Item, Lootbox } from 'shared/src/models'
+import { Game, Item, Lootbox } from 'shared/src/types'
 
 type RequiredField<T, K extends keyof T> = T & Required<Pick<T, K>>
 

@@ -1,21 +1,8 @@
 import { PublicKey } from "@solana/web3.js";
+import { Lootbox } from "../types";
 import { createMoogoseModel, MongoSchema } from "./shared";
 
-export interface Lootbox {
-  appId: number;
-  name: string;
-  imageUrl: string;
-  items: Array<{
-    marketHashName: string;
-    rarity: number;
-  }>;
-  priceSOL: number;
-  lastRecordedPrice?: number;
-  enabled: boolean;
-  startTime?: Date;
-  endTime?: Date;
-  updatedAt?: Date;
-}
+
 
 export const lootboxSchema = new MongoSchema<Lootbox>({}, {strict: false, timestamps: true});
 

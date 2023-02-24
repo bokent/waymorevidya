@@ -1,24 +1,7 @@
 import { PublicKey } from "@solana/web3.js";
+import { Item } from "../types";
 import { createMoogoseModel, MongoSchema } from "./shared";
 
-export interface Item {
-  appId: number;
-  marketHashName: string;
-  name: string;
-  // projectExternalUrl: string;
-  imageUrl: string;
-  direct_buy: boolean;
-  enabled: boolean;
-  startTime?: Date;
-  endTime?: Date;
-  lastRecordedPrice?: number;
-  priceSOL?: number;
-  tags?: Array<{
-    category: string;
-    value: string;
-  }>;
-  updatedAt?: Date;
-}
 
 export const itemSchema = new MongoSchema<Item>(
   {},

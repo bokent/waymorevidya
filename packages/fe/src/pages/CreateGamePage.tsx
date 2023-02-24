@@ -1,5 +1,5 @@
 import { Stepper, Title, TextInput, Group, Button, Progress, Space } from '@mantine/core'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Layout } from '../components/Layout'
 
@@ -12,14 +12,19 @@ export function CreateGamePage() {
   useEffect(() => {
     const updateProgressBar = () => setProgressValue((prevValue) => prevValue + 10 * Math.random())
     if (isMigrating && progressValue < 100) {
-      setTimeout(updateProgressBar, 1000)
+      setTimeout(updateProgressBar, 100)
     }
     if (progressValue >= 100) {
       setProgressValue(100)
       setIsMigrating(false)
     }
   }, [isMigrating, progressValue, setProgressValue])
-
+  const generateGamePage = useCallback(() => {
+    if (steamID === 0 || isMigrating == true) {
+      return
+    }
+    fetch((process.env.REACT_APP_BACKEND_API ?? '') + `/generateSteamAppPage/${steamID}`)
+  }, [isMigrating, steamID, activeStep])
   return (
     <Layout>
       <Title mb="xl">Game Onboarding Process</Title>
@@ -38,7 +43,14 @@ export function CreateGamePage() {
           <Space h="xl" />
           {isMigrating && <Progress size="xl" animate value={progressValue} />}
           {!isMigrating && progressValue < 100 && (
-            <Button onClick={() => setIsMigrating(true)}>Import assets from Steam</Button>
+            <Button
+              onClick={() => {
+                setIsMigrating(true)
+                generateGamePage()
+              }}
+            >
+              Import assets from Steam
+            </Button>
           )}
           {!isMigrating && progressValue >= 100 && (
             <Button
